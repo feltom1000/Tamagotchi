@@ -1,0 +1,2 @@
+class medicina:
+    valor = int
