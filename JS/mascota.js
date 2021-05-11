@@ -32,17 +32,21 @@ class Mascota {
     }
     
     irAlBanio(){
-        if (this.energia < 5) throw "Toy taan cansado... No puedo... ni... llegar... al baño"
-        if (this.felicidad > 95){
-            this.felicidad = 100
+        if (this.energia < 5){
+            return "Toy taan cansado... No puedo... ni... llegar... al baño"
         } else {
-            this.felicidad += 5
-        }
-        this.energia -= 5;
-        if (this.incontinencia < 45){
-            return this.incontinencia = 0;
-        } else {
-            return this.incontinencia -= 45;
+            if (this.felicidad > 95){
+                this.felicidad = 100
+            } else {
+                this.felicidad += 5
+            }
+            this.energia -= 5;
+            if (this.incontinencia < 45){
+                this.incontinencia = 0;
+            } else {
+                this.incontinencia -= 45;
+            }
+            return "Ufff, ya me siento mejor";
         }
     }
     
