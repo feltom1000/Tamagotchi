@@ -22,12 +22,12 @@ class Mascota {
         if (this.energia < 10){
             return "Toy cansado!!! No quiero tomar mi medicina >.<"
         } else {
-        this.energia -= 10;
-        }
-        if (this.salud > 60) {
-            return this.salud = 100;
-        } else {
-            return this.salud += 40
+            this.energia -= 10;
+            if (this.salud > 60) {
+                return this.salud = 100;
+            } else {
+                return this.salud += 40
+            }
         }
     }
     
@@ -98,8 +98,10 @@ class Mascota {
        this.modificarHambrePorComer(comida.valorNutritivo);
         if (this.salud - ((comida.valorGraso - comida.valorNutritivo) / 2) > 100){
            this.salud = 100
+        } else if (this.salud - ((comida.valorGraso - comida.valorNutritivo) / 2) < 0){
+            this.salud = 0
         } else {
-           this.salud -= ((comida.valorGraso - comida.valorNutritivo) / 2);
+            this.salud -= ((comida.valorGraso - comida.valorNutritivo) / 2)
         }
         this.incontinencia += 30;
         this.suciedad += 10;

@@ -6,3 +6,5 @@ class Comida{
         this.valorFelicidad = valorFelicidad
     }
 }
+
+module.exports = Comida
