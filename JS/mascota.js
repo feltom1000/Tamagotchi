@@ -19,8 +19,11 @@ class Mascota {
     }
     
     tomarMedicina(){
-        if (this.energia < 10) throw "Toy cansado!!! No quiero tomar mi medicina >.<"
+        if (this.energia < 10){
+            return "Toy cansado!!! No quiero tomar mi medicina >.<"
+        } else {
         this.energia -= 10;
+        }
         if (this.salud > 60) {
             return this.salud = 100;
         } else {
