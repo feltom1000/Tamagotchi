@@ -22,6 +22,7 @@ class Mascota {
         if (this.energia < 10){
             return "Toy cansado!!! No quiero tomar mi medicina >.<"
         } else {
+            this.felicidad -= 15;
             this.energia -= 10;
             if (this.salud > 60) {
                 return this.salud = 100;
@@ -62,6 +63,7 @@ class Mascota {
             this.energia -= 25
             this.suciedad += 25
             this.incontinencia += 10
+            this.hambre -= 15 
             return "Wiiiiiiiiiiiiiii"
         }
     }
@@ -105,11 +107,11 @@ class Mascota {
         } else if (this.salud - ((comida.valorGraso - comida.valorNutritivo) / 2) < 0){
             this.salud = 0
         } else {
-            this.salud -= ((comida.valorGraso - comida.valorNutritivo) / 2)
+            this.salud += ((comida.valorNutritivo - comida.valorGraso) / 2)
         }
         this.incontinencia += 30;
         this.suciedad += 10;
-        return "Hmmmm.... ¡¡Que Rico!!"
+        return "Hmmmm.... ¡¡Gracias!!"
     }
 
     dormir(){

@@ -2,7 +2,7 @@ const Comida = require('../JS/comida')
 
 class Pollo extends Comida{
     constructor(){
-        super(20, 35, 5, 15)
+        super(20, 35, 5, 10)
     }
 
 }
