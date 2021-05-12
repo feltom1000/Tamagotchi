@@ -115,10 +115,11 @@ class Mascota {
     }
 
     dormir(){
-        if (this.energia = 100){
+        if (this.energia == 100){
             return "¡¡¡No tengo Sueño!!!!"
-        } else if (this.senergia > 75){
+        } else if (this.energia > 75){
             this.energia = 100;
+            return "zzzZZZzzz"
         } else {
             this.energia += 25;
             return "zzzzzzzzZZZZZZZZZzzzzzzzz"
@@ -126,12 +127,14 @@ class Mascota {
     }
 
     baniarse(){
-        if (this.suciedad = 0){
+        if (this.suciedad == 0){
             return "¡¡Pero no estoy sucio!!"
         } else if (this.suciedad < 25){
             this.suciedad = 0;
+            return "Fresco como una lechuga"
         } else {
             this.suciedad -= 25;
+            return "Ahora si que brillo de limpito =)"
         }
     }
 }

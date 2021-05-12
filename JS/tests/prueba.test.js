@@ -178,3 +178,40 @@ it('mascota con la energia a full, trata de dormir y no puede', () => {
     expect(mascota.energia).toEqual(100)
     
 });
+
+it('mascota con mas energia de 75, al dormir, devuelve 100', () => {
+    const mascota = new Mascota()
+    mascota.energia = 80
+    expect(mascota.dormir()).toEqual("zzzZZZzzz")
+    expect(mascota.energia).toEqual(100)
+    
+});
+
+it('mascota al dormir aumenta aumenta 25 de energia', () => {
+    const mascota = new Mascota()
+    mascota.energia = 50
+    expect(mascota.dormir()).toEqual("zzzzzzzzZZZZZZZZZzzzzzzzz")
+    expect(mascota.energia).toEqual(75)
+});
+
+it('mascota al no estar sucio, no se quiere baniar', () => {
+    const mascota = new Mascota()
+    //mascota.suciedad = 50
+    expect(mascota.baniarse()).toEqual("¡¡Pero no estoy sucio!!")
+});
+
+it('mascota con menos de 25 de suciedad, devuelve 0 al bañarse', () => {
+    const mascota = new Mascota()
+    mascota.suciedad = 20
+    expect(mascota.baniarse()).toEqual("Fresco como una lechuga")
+    expect(mascota.suciedad).toEqual(0)
+});
+
+it('mascota se baña y todo se modifica correctamente', () => {
+    const mascota = new Mascota()
+    mascota.suciedad = 50
+    expect(mascota.baniarse()).toEqual("Ahora si que brillo de limpito =)")
+    expect(mascota.suciedad).toEqual(25)
+});
+
+
