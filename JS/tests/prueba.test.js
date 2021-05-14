@@ -7,211 +7,265 @@ const Pollo = require('../pollo')
 const Pescado = require('../pescado')
 
 
-it('mascota sin energia trata de tomar su medicina y no puede', () => {
-    const mascota = new Mascota()
-    mascota.jugar() //Energia en 75 / Suciedad en 25 / Incontinencia en 10
-    mascota.jugar() //Energia en 50 / Suciedad en 50 / Incontinencia en 20
-    mascota.jugar() //Energia en 25 / Suciedad en 75 / Incontinencia en 30
-    mascota.jugar()//Energia en 0 / Suciedad en 100 / Incontinencia en 40
-    expect(mascota.tomarMedicina()).toEqual("Toy cansado!!! No quiero tomar mi medicina >.<")
-    expect(mascota.salud).toEqual(100)
-    expect(mascota.suciedad).toEqual(100)
-    expect(mascota.incontinencia).toEqual(40)
+describe('La mascota existe', () => {
+    let mascota // Variable global
+    //beforeAll(()=>{
+       // });
+
+        describe('Cuando la mascota esta muy cansada (energia = 0)', () => {
+            beforeAll(()=>{
+                mascota = new Mascota()
+                mascota.energia = 0
+                });
+        
+                describe('Y quiere ir al baño', () => {
+                    it('responde que esta muy cansado', () => {
+                        expect(mascota.irAlBanio()).toEqual("Toy taan cansado... No puedo... ni... llegar... al baño")
+                    });
+                });
+            
+                describe('Y quiere jugar', () => {
+                    it('responde que esta muy cansada para jugar', () => {
+                        expect(mascota.jugar()).toEqual("¡Estoy muy cansado para jugar! :(")
+                    });
+                });
+        
+                describe('Y quiere tomar su medicina', () => {
+                    it('responde que esta muy cansada para tomar su medicina', () => {
+                        expect(mascota.tomarMedicina()).toEqual("Toy cansado!!! No quiero tomar mi medicina >.<")
+                    });
+                });
+        });
+        
+        describe('Mascota intenta tomar la medicina', () => {
+            beforeAll(()=>{
+                mascota0 = new Mascota()
+                });
+
+            describe('Y al tener mas de 60 de salud', () => {
+                it('devuelve 100', () => {
+                    mascota0.salud = 65
+                    mascota0.tomarMedicina()
+                    expect(mascota0.salud).toEqual(100)
+                    expect(mascota0.energia).toEqual(90)
+                    expect(mascota0.felicidad).toEqual(85)
+                });
+            });
+            
+            describe('Y al no tener salud', () => {
+                it('suma 40 de salud', () => {
+                    let mascota5 = new Mascota
+                    mascota5.salud = 0
+                    mascota5.tomarMedicina()
+                    expect(mascota5.salud).toEqual(40)
+                    expect(mascota5.energia).toEqual(90)
+                    expect(mascota5.felicidad).toEqual(85)
+                });
+            });
+        });
+        
+        describe('Mascota intenta ir al baño', () => {
+            beforeAll(()=>{
+                mascota1 = new Mascota()
+                });
+
+            describe('Y al tener + de 95 de Felicidad', () => {
+                it('devuelve 100', () => {
+                    mascota1.felicidad = 96
+                    mascota1.irAlBanio()
+                    expect(mascota1.felicidad).toEqual(100)
+                });
+            });
+            
+            describe('Y al no tener felicidad', () => {
+                it('suma 5', () => {
+                    mascota1.felicidad = 0
+                    mascota1.irAlBanio()
+                    expect(mascota1.felicidad).toEqual(5)
+                });
+            });
+
+            describe('Y al tener menos de 45 de Incontinencia', () => {
+                it('incontinencia devuelve 0', () => {
+                    mascota1.incontinencia = 30
+                    mascota1.irAlBanio()
+                    expect(mascota1.incontinencia).toEqual(0)
+                });
+            });
+
+            describe('Y al tener mas de 45 de Incontinencia', () => {
+                it('incontinencia resta 45', () => {
+                    mascota1.incontinencia = 50
+                    mascota1.irAlBanio()
+                    expect(mascota1.incontinencia).toEqual(5)
+                });
+            });
+
+            it('Responde correctamente', () => {
+                expect(mascota1.irAlBanio()).toEqual("Ufff, ya me siento mejor")
+            });
+        });
+
+        describe('Mascota intenta jugar', () => {
+            beforeAll(()=>{
+                mascota2 = new Mascota()
+                });
+
+            describe('Y al tener mas de 75 de felicidad', () => {
+                it('devuelve 100', () => {
+                    mascota2.felicidad = 80
+                    mascota2.jugar()
+                    expect(mascota2.felicidad).toEqual(100)
+                });
+            });
+            
+            describe('Y al tener menos de 75 de felicidad', () => {
+                it('suma 25', () => {
+                    mascota2.felicidad = 50
+                    mascota2.jugar()
+                    expect(mascota2.felicidad).toEqual(75)
+                });
+            });
+
+            it('la energia, la suciedad, la incontinencia y el hambre se alteran.', () => {
+                let mascota4 = new Mascota()
+                mascota4.jugar()
+                expect(mascota4.suciedad).toEqual(25) // Suma 25 de Suciedad
+                expect(mascota4.incontinencia).toEqual(10) // Suma 10 de incontinencia
+                expect(mascota4.energia).toEqual(75) // Baja 25 de Energia
+                expect(mascota4.hambre).toEqual(85) // Baja 25 de hambre
+            });
+
+            it('Responde correctamente al jugar', () => {
+                mascota.jugar()
+                expect(mascota2.jugar()).toEqual("Wiiiiiiiiiiiiiii")
+            });
+        });
+
+        describe('Mascota come:', () => {
+            beforeEach(()=>{
+                mascota = new Mascota()
+                mascota.energia = 0
+                mascota.hambre = 0
+                mascota.gordura = 50
+                mascota.felicidad = 0
+                mascota.salud = 50
+                });
+
+                it('Manzana:', () => {
+                    const manzana = new Manzana()
+                    mascota.comer(manzana)
+                    expect(mascota.energia).toEqual(20) // + 20
+                    expect(mascota.hambre).toEqual(35) // + 35
+                    expect(mascota.gordura).toEqual(40) // - 10
+                    expect(mascota.felicidad).toEqual(-5) // - 5
+                    expect(mascota.salud).toEqual(72.5) // + 22.5
+                });
+                
+                it('Pollo:', () => {
+                    const pollo = new Pollo()
+                    mascota.comer(pollo)
+                    expect(mascota.energia).toEqual(20) // + 20
+                    expect(mascota.hambre).toEqual(35) // + 35
+                    expect(mascota.gordura).toEqual(55) // + 5
+                    expect(mascota.felicidad).toEqual(10) // + 10
+                    expect(mascota.salud).toEqual(65) // + 15
+                });
     
-});
-
-it('mascota con mas de 60 de salud, devuelve 100 de salud al tomar medicina', () => {
-    const papasFritas = new PapasFritas
-    const mascota = new Mascota()
-    mascota.comer(papasFritas) //Salud en 65 / Suciedad en 10 / Incontinencia en 30
-    expect(mascota.suciedad).toEqual(10)
-    expect(mascota.incontinencia).toEqual(30)
-    expect(mascota.salud).toEqual(65)
-    mascota.tomarMedicina() // Salud 100 / Energia 90 / Felicidad 85
-    expect(mascota.salud).toEqual(100)
-    expect(mascota.energia).toEqual(90)
+                it('PapasFritas:', () => {
+                    const papasFritas = new PapasFritas()
+                    mascota.comer(papasFritas)
+                    expect(mascota.energia).toEqual(5) // + 5
+                    expect(mascota.hambre).toEqual(-20) // - 20
+                    expect(mascota.gordura).toEqual(100) // + 50
+                    expect(mascota.felicidad).toEqual(65) // + 65
+                    expect(mascota.salud).toEqual(15) // - 35
+                });
     
-});
+                it('Chocolate:', () => {
+                    const chocolate = new Chocolate()
+                    mascota.comer(chocolate)
+                    expect(mascota.energia).toEqual(15) // + 15
+                    expect(mascota.hambre).toEqual(5) // + 5
+                    expect(mascota.gordura).toEqual(90) // + 40
+                    expect(mascota.felicidad).toEqual(50) // + 50
+                    expect(mascota.salud).toEqual(32.5) // - 17.5
+                });
 
-it('mascota con poca salud, toma medicina y suma 40', () => {
-    const papasFritas = new PapasFritas
-    const mascota = new Mascota()
-    mascota.comer(papasFritas) //Salud en 65 / Suciedad en 10 / Incontinencia en 30
-    mascota.comer(papasFritas) //Salud 30 / Suciedad en 20 / Incontinencia en 60
-    expect(mascota.suciedad).toEqual(20)
-    expect(mascota.incontinencia).toEqual(60)
-    expect(mascota.salud).toEqual(30)
-    mascota.tomarMedicina() // Salud 100 / Energia 90 / Felicidad 85
-    expect(mascota.felicidad).toEqual(85)
-    expect(mascota.salud).toEqual(70)
-    expect(mascota.energia).toEqual(90)
+                it('Pescado:', () => {
+                    const pescado = new Pescado()
+                    mascota.comer(pescado)
+                    expect(mascota.energia).toEqual(35) // + 35
+                    expect(mascota.hambre).toEqual(25) // + 25
+                    expect(mascota.gordura).toEqual(60) // + 10
+                    expect(mascota.felicidad).toEqual(-5) // - 5
+                    expect(mascota.salud).toEqual(57.5) // + 7.5
+                });
+
+                describe('Al comer lo que sea', () => {
+                    const manzana = new Manzana()
+                    it('se modifica su incontinencia y suciedad, y responde.', () => {
+                        expect(mascota.comer(manzana)).toEqual("Hmmmm.... ¡¡Gracias!!")
+                        expect(mascota.suciedad).toEqual(10) // + 10
+                        expect(mascota.incontinencia).toEqual(30) // + 30
+                    });
+                });
     
+        });
+
+        describe('Mascota intenta dormir', () => {
+            beforeAll(()=>{
+                mascota = new Mascota()
+                });
+            describe('Y al tener 100 de energia', () => {
+                it('No puede dormir', () => {
+                    mascota.energia = 100
+                    expect(mascota.dormir()).toEqual("¡¡¡No tengo Sueño!!!!")
+                });
+            });
+            
+            describe('Y al tener mas de 75 de energia', () => {
+                it('devuelve 100 y responde', () => {
+                    mascota.energia = 80
+                    expect(mascota.dormir()).toEqual("zzzZZZzzz")
+                    expect(mascota.energia).toEqual(100)
+                });
+            });
+
+            describe('Y al tener menos de 75 de energia', () => {
+                it('suma 25 y responde', () => {
+                    mascota.energia = 50
+                    expect(mascota.dormir()).toEqual("zzzzzzzzZZZZZZZZZzzzzzzzz")
+                    expect(mascota.energia).toEqual(75)
+                });
+            });
+        });
+
+        describe('Mascota intenta bañarse', () => {
+            beforeAll(()=>{
+                mascota = new Mascota()
+                });
+            describe('Y al no tener suciedad', () => {
+                it('no se quiere bañar', () => {
+                    mascota.suciedad = 0
+                    expect(mascota.baniarse()).toEqual("¡¡Pero no estoy sucio!!")
+                });
+            });
+
+            describe('Y al tener menos de 25 de suciedad', () => {
+                it('devuelve 0 y responde', () => {
+                    mascota.suciedad = 20
+                    expect(mascota.baniarse()).toEqual("Fresco como una lechuga")
+                    expect(mascota.suciedad).toEqual(0)
+                });
+            });
+
+            describe('Al tener mas de 25 de suciedad', () => {
+                it('se resta 25 y responde', () => {
+                    mascota.suciedad = 50
+                    expect(mascota.baniarse()).toEqual("Ahora si que brillo de limpito =)")
+                    expect(mascota.suciedad).toEqual(25)
+                });
+            });
+        });
 });
-
-it('mascota esta muy cansada para ir al baño', () => {
-    const mascota = new Mascota()
-    mascota.jugar() //Energia en 75 / Suciedad en 25 / Incontinencia en 10
-    mascota.jugar() //Energia en 50 / Suciedad en 50 / Incontinencia en 20
-    mascota.jugar() //Energia en 25 / Suciedad en 75 / Incontinencia en 30
-    mascota.jugar()//Energia en 0 / Suciedad en 100 / Incontinencia en 40
-    expect(mascota.irAlBanio()).toEqual("Toy taan cansado... No puedo... ni... llegar... al baño")
-});
-
-it('mascota va al banio y se modifican los atributos correctamente y responde correctamente', () => {
-    const mascota = new Mascota()
-    mascota.jugar() //Energia en 75 / Suciedad en 25 / Incontinencia en 10
-    mascota.jugar() //Energia en 50 / Suciedad en 50 / Incontinencia en 20
-    mascota.jugar() //Energia en 25 / Suciedad en 75 / Incontinencia en 30
-    expect(mascota.irAlBanio()).toEqual("Ufff, ya me siento mejor") // Energia 20
-    expect(mascota.felicidad).toEqual(100)
-    expect(mascota.incontinencia).toEqual(0)
-    expect(mascota.energia).toEqual(20)
-});
-
-it('mascota sin energia esta muy cansada para jugar', () => {
-    const mascota = new Mascota()
-    mascota.jugar() //Energia en 75 / Suciedad en 25 / Incontinencia en 10
-    mascota.jugar() //Energia en 50 / Suciedad en 50 / Incontinencia en 20
-    mascota.jugar() //Energia en 25 / Suciedad en 75 / Incontinencia en 30
-    mascota.jugar()//Energia en 0 / Suciedad en 100 / Incontinencia en 40
-    expect(mascota.jugar()).toEqual("¡Estoy muy cansado para jugar! :(")
-    expect(mascota.felicidad).toEqual(100)
-});
-
-it('mascota juega y se le incrementa la felicidad, la suciedad y la incontinencia. Baja la energia', () => {
-    const mascota = new Mascota()
-    mascota.tomarMedicina() // Felicidad 85 / Energia 90
-    mascota.tomarMedicina() // Felicidad 70 / Energia 80
-    expect(mascota.jugar()).toEqual("Wiiiiiiiiiiiiiii") // Felicidad 95 / Suciedad 25 / Incontinencia 10 / Energia 55 / Hambre 85
-    expect(mascota.felicidad).toEqual(95)
-    expect(mascota.suciedad).toEqual(25)
-    expect(mascota.incontinencia).toEqual(10)
-    expect(mascota.energia).toEqual(55)
-    expect(mascota.hambre).toEqual(85)
-});
-
-it('mascota come manzana y todos los atributos de modifican correctamente', () => {
-    const mascota = new Mascota()
-    const manzana = new Manzana()
-    mascota.felicidad = 0
-    mascota.hambre = 0
-    mascota.salud = 0
-    mascota.gordura = 100
-    mascota.energia = 0
-    expect(mascota.comer(manzana)).toEqual("Hmmmm.... ¡¡Gracias!!") //Energia 20 / Hambre 35 / gordura 90 / Felicidad -5 / Salud 22.5
-    expect(mascota.energia).toEqual(20)
-    expect(mascota.hambre).toEqual(35)
-    expect(mascota.gordura).toEqual(90)
-    expect(mascota.felicidad).toEqual(-5)
-    expect(mascota.salud).toEqual(22.5)
-});
-
-it('mascota come pollo y todos los atributos de modifican correctamente', () => {
-    const mascota = new Mascota()
-    const pollo = new Pollo()
-    mascota.felicidad = 0
-    mascota.hambre = 0
-    mascota.salud = 0
-    mascota.gordura = 0
-    mascota.energia = 0
-    expect(mascota.comer(pollo)).toEqual("Hmmmm.... ¡¡Gracias!!") //Energia 20 / Hambre 35 / gordura 5 / Felicidad 10 / salud 15
-    expect(mascota.energia).toEqual(20)
-    expect(mascota.hambre).toEqual(35)
-    expect(mascota.gordura).toEqual(5)
-    expect(mascota.felicidad).toEqual(10)
-    expect(mascota.salud).toEqual(15)
-});
-
-it('mascota come papasFritas y todos los atributos de modifican correctamente', () => {
-    const mascota = new Mascota()
-    const papasFritas = new PapasFritas()
-    mascota.felicidad = 0
-    mascota.hambre = 0
-    mascota.salud = 100
-    mascota.gordura = 0
-    mascota.energia = 0
-    expect(mascota.comer(papasFritas)).toEqual("Hmmmm.... ¡¡Gracias!!") //Energia 5 / Hambre -20 / gordura 50 / Felicidad 65 / salud 65
-    expect(mascota.energia).toEqual(5)
-    expect(mascota.hambre).toEqual(-20)
-    expect(mascota.gordura).toEqual(50)
-    expect(mascota.felicidad).toEqual(65)
-    expect(mascota.salud).toEqual(65)
-});
-
-it('mascota come chocolate y todos los atributos de modifican correctamente', () => {
-    const mascota = new Mascota()
-    const chocolate = new Chocolate()
-    mascota.felicidad = 0
-    mascota.hambre = 0
-    mascota.salud = 100
-    mascota.gordura = 0
-    mascota.energia = 0
-    expect(mascota.comer(chocolate)).toEqual("Hmmmm.... ¡¡Gracias!!") //Energia 15 / Hambre 5 / gordura 40 / Felicidad 50 / salud 82.5
-    expect(mascota.energia).toEqual(15)
-    expect(mascota.hambre).toEqual(5)
-    expect(mascota.gordura).toEqual(40)
-    expect(mascota.felicidad).toEqual(50)
-    expect(mascota.salud).toEqual(82.5)
-});
-
-it('mascota come pescado y todos los atributos de modifican correctamente. Incluido incontinencia y suciedad', () => {
-    const mascota = new Mascota()
-    const pescado = new Pescado()
-    mascota.felicidad = 0
-    mascota.hambre = 0
-    mascota.salud = 0
-    mascota.gordura = 0
-    mascota.energia = 0
-    expect(mascota.comer(pescado)).toEqual("Hmmmm.... ¡¡Gracias!!") //Energia 35 / Hambre 25 / gordura 10 / Felicidad -5 / salud 7.5
-    expect(mascota.energia).toEqual(35)
-    expect(mascota.hambre).toEqual(25)
-    expect(mascota.gordura).toEqual(10)
-    expect(mascota.felicidad).toEqual(-5)
-    expect(mascota.salud).toEqual(7.5)
-    expect(mascota.incontinencia).toEqual(30)
-    expect(mascota.suciedad).toEqual(10)
-});
-
-it('mascota con la energia a full, trata de dormir y no puede', () => {
-    const mascota = new Mascota()
-    expect(mascota.dormir()).toEqual("¡¡¡No tengo Sueño!!!!")
-    expect(mascota.energia).toEqual(100)
-    
-});
-
-it('mascota con mas energia de 75, al dormir, devuelve 100', () => {
-    const mascota = new Mascota()
-    mascota.energia = 80
-    expect(mascota.dormir()).toEqual("zzzZZZzzz")
-    expect(mascota.energia).toEqual(100)
-    
-});
-
-it('mascota al dormir aumenta aumenta 25 de energia', () => {
-    const mascota = new Mascota()
-    mascota.energia = 50
-    expect(mascota.dormir()).toEqual("zzzzzzzzZZZZZZZZZzzzzzzzz")
-    expect(mascota.energia).toEqual(75)
-});
-
-it('mascota al no estar sucio, no se quiere baniar', () => {
-    const mascota = new Mascota()
-    //mascota.suciedad = 50
-    expect(mascota.baniarse()).toEqual("¡¡Pero no estoy sucio!!")
-});
-
-it('mascota con menos de 25 de suciedad, devuelve 0 al bañarse', () => {
-    const mascota = new Mascota()
-    mascota.suciedad = 20
-    expect(mascota.baniarse()).toEqual("Fresco como una lechuga")
-    expect(mascota.suciedad).toEqual(0)
-});
-
-it('mascota se baña y todo se modifica correctamente', () => {
-    const mascota = new Mascota()
-    mascota.suciedad = 50
-    expect(mascota.baniarse()).toEqual("Ahora si que brillo de limpito =)")
-    expect(mascota.suciedad).toEqual(25)
-});
-
-

@@ -36,12 +36,12 @@ class Mascota {
         if (this.energia < 5){
             return "Toy taan cansado... No puedo... ni... llegar... al baño"
         } else {
+            this.energia -= 5;
             if (this.felicidad > 95){
                 this.felicidad = 100
             } else {
                 this.felicidad += 5
             }
-            this.energia -= 5;
             if (this.incontinencia < 45){
                 this.incontinencia = 0;
             } else {
